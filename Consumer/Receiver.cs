@@ -8,7 +8,6 @@ public class Receiver
     {
         var factory = new ConnectionFactory() { HostName = "localhost" };
 
-
         using (var connection = factory.CreateConnection())
         using (var channel = connection.CreateModel())
         {
@@ -21,7 +20,6 @@ public class Receiver
             channel.BasicQos(prefetchSize: 0, prefetchCount: 1, global: false);
 
             Console.WriteLine($"Waiting for recieving messages in host: {factory.HostName}");
-
 
             var consumer = new EventingBasicConsumer(channel);
 
@@ -39,7 +37,7 @@ public class Receiver
                  // Note: it is possible to access the channel via
                 //       ((EventingBasicConsumer)sender).Model here
                 channel.BasicAck(deliveryTag: ea.DeliveryTag, multiple: false);
-                
+
             };
 
             channel.BasicConsume(queue: "helloQueue",
